@@ -8,6 +8,9 @@ namespace Mission06_koletonm.Models
 {
     public class AddMovieResponse
     {
+        [Key]
+        [Required]
+        public int MoviesId { get; set; }
         [Required]
         public string Category { get; set; }
         [Required]
