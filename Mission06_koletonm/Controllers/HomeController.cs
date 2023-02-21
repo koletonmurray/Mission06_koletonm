@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Mission06_koletonm.Models;
 using System;
@@ -11,12 +12,10 @@ namespace Mission06_koletonm.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private Mission6Context MyContext { get; set; }
 
-        public HomeController(ILogger<HomeController> logger, Mission6Context x)
+        public HomeController(Mission6Context x)
         {
-            _logger = logger;
             MyContext = x;
         }
 
@@ -36,20 +35,28 @@ namespace Mission06_koletonm.Controllers
         [HttpGet]
         public IActionResult AddMovie()
         {
+            ViewBag.MovieCategories = MyContext.MovieCategories.ToList();
+
             return View();
         }
         [HttpPost]
-        public IActionResult AddMovie(AddMovieResponse amr)
+        public IActionResult AddMovie(AddMovie am)
         {
-            MyContext.Add(amr);
-            MyContext.SaveChanges();
-            return View("Confirmation");
-        }
+            // If there aren't valid inputs then return the same page and it will display the validation errors
+            if (!ModelState.IsValid)
+            {
+                return View("AddMovie");
+            }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+           MyContext.Add(am);
+           MyContext.SaveChanges();
+           return View("Confirmation");
+
+        }
+        public IActionResult ShowMovies()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var movie = MyContext.Movies.Include(m => m.MovieCategory).OrderBy(m => m.MovieCategory).ToList();
+            return View(movie);
         }
     }
 }

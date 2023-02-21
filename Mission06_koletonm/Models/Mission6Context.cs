@@ -14,15 +14,31 @@ namespace Mission06_koletonm.Models
 
         }
 
-        public DbSet<AddMovieResponse> Responses { get; set; }
+        public DbSet<AddMovie> Movies { get; set; }
+        public DbSet<MovieCategory > MovieCategories { get; set; }
+        // Seeding the data
 
         protected override void OnModelCreating(ModelBuilder mb)
         {
-            mb.Entity<AddMovieResponse>().HasData(
-                new AddMovieResponse
+            mb.Entity<MovieCategory>().HasData(
+                new MovieCategory { CategoryId = 1, CategoryName = "Action/Adventure"},
+                new MovieCategory { CategoryId = 2, CategoryName = "Comedy" },
+                new MovieCategory { CategoryId = 3, CategoryName = "Drama" },
+                new MovieCategory { CategoryId = 4, CategoryName = "Family" },
+                new MovieCategory { CategoryId = 5, CategoryName = "Horror" },
+                new MovieCategory { CategoryId = 6, CategoryName = "Musical" },
+                new MovieCategory { CategoryId = 7, CategoryName = "Mystery/Thriller" },
+                new MovieCategory { CategoryId = 8, CategoryName = "Romance" },
+                new MovieCategory { CategoryId = 9, CategoryName = "Science Fiction" },
+                new MovieCategory { CategoryId = 10, CategoryName = "Sports" },
+                new MovieCategory { CategoryId = 11, CategoryName = "War" }
+            );
+
+            mb.Entity<AddMovie>().HasData(
+                new AddMovie
                 {
-                    MoviesId = 1,
-                    Category = "Action/Adventure",
+                    MovieId = 1,
+                    CategoryId = 1,
                     Title = "Avengers: Endgame",
                     Year = 2019,
                     Director = "Anthony Russo",
@@ -31,10 +47,10 @@ namespace Mission06_koletonm.Models
                     LentTo = "",
                     Notes = "Best movie!"
                 },
-                new AddMovieResponse
+                new AddMovie
                 {
-                    MoviesId = 2,
-                    Category = "Family/Comdey",
+                    MovieId = 2,
+                    CategoryId = 2,
                     Title = "Emporer's New Groove",
                     Year = 2000,
                     Director = "Mark Dindal",
@@ -43,10 +59,10 @@ namespace Mission06_koletonm.Models
                     LentTo = "",
                     Notes = "A Classic!"
                 }, 
-                new AddMovieResponse
+                new AddMovie
                 {
-                    MoviesId = 3,
-                    Category = "War/Drama",
+                    MovieId = 3,
+                    CategoryId = 4,
                     Title = "The Zookeeper's Wife",
                     Year = 2017,
                     Director = "Niki Caro",

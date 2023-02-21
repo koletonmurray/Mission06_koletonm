@@ -2,15 +2,22 @@
     ViewData["Title"] = "Add a Movie";
 }
 
-@model Mission06_koletonm.Models.AddMovieResponse
+@model Mission06_koletonm.Models.AddMovie
 
 <h1>Add a Movie to the Joel Hilton Film Collection</h1>
 <br />
 
 <form method="post">
     <p>
-        <label asp-for="Category">Category: </label>
-        <input asp-for="Category" /><br />
+        <label asp-for="CategoryId">Category: </label>
+        <select asp-for="CategoryId">
+            <!--<option value="">Select a Major</option>-->
+            @foreach (MovieCategory mc in ViewBag.MovieCategories)
+            {
+                <option value="@mc.CategoryId">@mc.CategoryName</option>
+            }
+        </select>
+        <br />
     </p>
 
     <p>
