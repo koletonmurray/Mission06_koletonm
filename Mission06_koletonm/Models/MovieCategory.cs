@@ -10,7 +10,7 @@ namespace Mission06_koletonm.Models
     public class MovieCategory
     {
         [Key]
-        public int CategoryId { get; set; }
-        public string CategoryName { get; set; }
+        public int MovieCategoryId { get; set; }
+        public string MovieCategoryName { get; set; }
     }
 }

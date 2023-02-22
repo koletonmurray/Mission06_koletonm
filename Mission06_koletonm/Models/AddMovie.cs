@@ -14,7 +14,7 @@ namespace Mission06_koletonm.Models
         public int MovieId { get; set; }
         [Required]
         public string Title { get; set; }
-        [Required]
+        [Required (ErrorMessage = "Enter a valid numeric year")]
         [Range(0, 3000)]
         public ushort Year { get; set; }
         [Required]
@@ -29,7 +29,7 @@ namespace Mission06_koletonm.Models
 
         // Build foreign key relationship between categoryid in both movies and moviecategories tables
         [Required]
-        public int CategoryId { get; set; }
+        public int MovieCategoryId { get; set; }
         public MovieCategory MovieCategory { get; set; }
     }
 }

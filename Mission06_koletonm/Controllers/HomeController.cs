@@ -43,20 +43,57 @@ namespace Mission06_koletonm.Controllers
         public IActionResult AddMovie(AddMovie am)
         {
             // If there aren't valid inputs then return the same page and it will display the validation errors
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View("AddMovie");
+                MyContext.Add(am);
+                MyContext.SaveChanges();
+                return RedirectToAction("ShowMovies");
+            }
+            else
+            {
+                ViewBag.MovieCategories = MyContext.MovieCategories.ToList();
+
+                return View(am);
             }
 
-           MyContext.Add(am);
-           MyContext.SaveChanges();
-           return View("Confirmation");
 
         }
         public IActionResult ShowMovies()
         {
             var movie = MyContext.Movies.Include(m => m.MovieCategory).OrderBy(m => m.MovieCategory).ToList();
             return View(movie);
+        }
+        [HttpGet]
+        public IActionResult Edit(int movieid)
+        {
+            ViewBag.MovieCategories = MyContext.MovieCategories.ToList();
+
+            var movie = MyContext.Movies.Single(x => x.MovieId == movieid);
+
+            return View("AddMovie", movie);
+        }
+        [HttpPost]
+        public IActionResult Edit(AddMovie am)
+        {
+            MyContext.Update(am);
+            MyContext.SaveChanges();
+
+            return RedirectToAction("ShowMovies");
+        }
+        [HttpGet]
+        public IActionResult Delete(int movieid)
+        {
+            var movie = MyContext.Movies.Single(x => x.MovieId == movieid);
+
+            return View(movie);
+        }
+        [HttpPost]
+        public IActionResult Delete(AddMovie am)
+        {
+            MyContext.Remove(am);
+            MyContext.SaveChanges();
+
+            return RedirectToAction("ShowMovies");
         }
     }
 }
